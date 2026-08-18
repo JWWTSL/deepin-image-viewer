@@ -274,11 +274,11 @@ bool ImageEditController::applyEffect(const QString &effect, const QRectF &norma
 
     strength = qBound(1, strength, 50);
     if (effect == QLatin1String("gaussian"))
-        applyBoxBlur(rect, qMax(1, strength / 2));
+        applyBoxBlur(rect, strength);
     else if (effect == QLatin1String("mosaic"))
-        applyMosaic(rect, qMax(2, strength));
+        applyMosaic(rect, strength);
     else if (effect == QLatin1String("graffiti"))
-        applyGraffiti(rect, qMax(4, strength));
+        applyGraffiti(rect, strength);
     else
         return false;
 
