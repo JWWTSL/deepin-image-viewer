@@ -214,7 +214,9 @@ Item {
     function nextNumber() {
         var used = {};
         for (var i = 0; i < strokes.length; ++i) {
-            if (strokes[i].type === "number") used[strokes[i].number] = true;
+            if (strokes[i].type !== "number") continue;
+            var value = Number(strokes[i].number);
+            if (Number.isInteger(value) && value > 0) used[value] = true;
         }
         var number = 1;
         while (used[number]) ++number;
@@ -230,6 +232,7 @@ Item {
             points: [Qt.point(x - diameter / 2, y - diameter / 2),
                      Qt.point(x + diameter / 2, y + diameter / 2)],
             color: currentColor.toString(),
+            fontFamily: textEditor.font.family,
             width: thickness,
             baseWidth: diameter,
             baseHeight: diameter
@@ -253,6 +256,7 @@ Item {
                 points: [Qt.point(textEditor.x, textEditor.y),
                          Qt.point(textEditor.x + textWidth, textEditor.y + textHeight)],
                 color: currentColor.toString(),
+                fontFamily: textEditor.font.family,
                 width: thickness,
                 baseWidth: textWidth,
                 baseHeight: textHeight
@@ -408,7 +412,8 @@ Item {
                     context.strokeStyle = stroke.color;
                     context.textAlign = stroke.type === "number" ? "center" : "left";
                     context.textBaseline = "middle";
-                    context.font = "20px sans-serif";
+                    var fontFamily = stroke.fontFamily || textEditor.font.family;
+                    context.font = "20px \"" + fontFamily.replace(/"/g, "\\\"") + "\"";
                     if (stroke.type === "number") {
                         var radius = stroke.baseWidth / 2 - Math.max(1, stroke.width / 2);
                         context.lineWidth = stroke.width;
@@ -448,8 +453,7 @@ Item {
                     if (stroke.type === "rect") {
                         context.rect(left, top, shapeWidth, shapeHeight);
                     } else {
-                        context.ellipse(left + shapeWidth / 2, top + shapeHeight / 2,
-                                        shapeWidth / 2, shapeHeight / 2, 0, 0, Math.PI * 2);
+                        context.ellipse(left, top, shapeWidth, shapeHeight);
                     }
                     context.stroke();
                     return;
@@ -576,6 +580,13 @@ Item {
                                                              editCanvas.cropRect.y + editCanvas.cropRect.height)];
                     return;
                 }
+                if (editCanvas.currentTool === "blur") {
+                    editCanvas.selectedIndex = -1;
+                    drawingCanvas.interaction = "effect";
+                    drawingCanvas.activePoints = [Qt.point(mouse.x, mouse.y), Qt.point(mouse.x, mouse.y)];
+                    drawingCanvas.requestPaint();
+                    return;
+                }
                 drawingCanvas.resizeHandle = editCanvas.handleAt(mouse.x, mouse.y);
                 if (drawingCanvas.resizeHandle !== "") {
                     drawingCanvas.interaction = "resize";
@@ -591,12 +602,6 @@ Item {
                     return;
                 }
                 editCanvas.selectedIndex = -1;
-                if (editCanvas.currentTool === "blur") {
-                    drawingCanvas.interaction = "effect";
-                    drawingCanvas.activePoints = [Qt.point(mouse.x, mouse.y), Qt.point(mouse.x, mouse.y)];
-                    drawingCanvas.requestPaint();
-                    return;
-                }
                 if (editCanvas.currentTool === "text") {
                     drawingCanvas.interaction = "";
                     if (editCanvas.textMode === "number") {
@@ -740,7 +745,7 @@ Item {
                     drawingCanvas.requestPaint();
                     return;
                 }
-                if (editCanvas.currentTool === "rect" || editCanvas.currentTool === "ellipse") {
+                if (editCanvas.currentTool === "rect") {
                     var start = points[0];
                     var deltaX = mouse.x - start.x;
                     var deltaY = mouse.y - start.y;
@@ -748,6 +753,13 @@ Item {
                     var endX = start.x + (deltaX < 0 ? -side : side);
                     var endY = start.y + (deltaY < 0 ? -side : side);
                     drawingCanvas.activePoints = [start, Qt.point(endX, endY)];
+                    drawingCanvas.requestPaint();
+                    return;
+                }
+                if (editCanvas.currentTool === "ellipse") {
+                    var ellipseStart = points[0];
+                    drawingCanvas.activePoints = [ellipseStart,
+                                                  Qt.point(mouse.x, mouse.y)];
                     drawingCanvas.requestPaint();
                     return;
                 }

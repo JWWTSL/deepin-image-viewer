@@ -14,9 +14,10 @@ DTK.Control {
     property string blurMode: "gaussian"
     property color currentColor: "#f82a2a"
     property int effectStrength: 15
+    readonly property var effectSteps: blurMode === "gaussian" ? [5, 15, 30] : [8, 16, 32]
     property string textMode: "plain"
     property int thickness: 2
-    readonly property color themeTextColor: Qt.rgba(0, 0, 0, 0.7)
+    readonly property color themeTextColor: palette.windowText
 
     signal blurModeSelected(string mode)
     signal colorSelected(color value)
@@ -35,7 +36,7 @@ DTK.Control {
     Accessible.name: qsTr("Tool properties")
     Accessible.role: Accessible.Pane
     implicitHeight: 56
-    implicitWidth: isEffectTool ? 367 : isTextTool ? 265 : 333
+    implicitWidth: isEffectTool ? 367 : isTextTool ? 299 : 383
     padding: 0
 
     background: Rectangle {
@@ -51,9 +52,11 @@ DTK.Control {
         required property string iconPath
         property bool selected: false
 
+        Accessible.name: DTK.ToolTip.text
+        Accessible.role: Accessible.Button
         display: AbstractButton.IconOnly
+        checked: selected
         height: 36
-        icon.color: selected ? "white" : propertyPanel.themeTextColor
         icon.height: 20
         icon.name: iconPath
         icon.width: 20
@@ -71,11 +74,18 @@ DTK.Control {
                   : "transparent"
             radius: 8
         }
+
+        DTK.ToolTip.delay: 500
+        DTK.ToolTip.timeout: 5000
+        DTK.ToolTip.visible: hovered
     }
 
     component ThicknessDot: Item {
         height: 36
         width: 36
+
+        Accessible.name: qsTr("Thickness")
+        Accessible.role: Accessible.Indicator
 
         Rectangle {
             anchors.centerIn: parent
@@ -118,6 +128,9 @@ DTK.Control {
     component ColorPalette: Item {
         height: 36
         width: 136
+
+        Accessible.name: qsTr("Color")
+        Accessible.role: Accessible.Grouping
 
         Grid {
             anchors.left: parent.left
@@ -163,6 +176,21 @@ DTK.Control {
         }
     }
 
+    component MoreColorsButton: DTK.ToolButton {
+        Accessible.name: DTK.ToolTip.text
+        Accessible.role: Accessible.Button
+        display: AbstractButton.TextOnly
+        height: 36
+        text: "..."
+        width: 36
+
+        DTK.ToolTip.delay: 500
+        DTK.ToolTip.text: qsTr("More Colors…")
+        DTK.ToolTip.timeout: 5000
+        DTK.ToolTip.visible: hovered
+        onClicked: colorDialog.open()
+    }
+
     contentItem: Item {
         Row {
             id: textControls
@@ -193,6 +221,7 @@ DTK.Control {
             }
             Separator { }
             ColorPalette { }
+            MoreColorsButton { }
         }
 
         Row {
@@ -212,11 +241,11 @@ DTK.Control {
             DTK.Slider {
                 id: effectSlider
 
-                from: propertyPanel.blurMode === "gaussian" ? 5 : 8
+                from: 0
                 height: 36
                 stepSize: 1
-                to: propertyPanel.blurMode === "gaussian" ? 30 : 32
-                value: propertyPanel.effectStrength
+                to: 2
+                value: Math.max(0, propertyPanel.effectSteps.indexOf(propertyPanel.effectStrength))
                 width: 120
                 background: Rectangle {
                     color: Qt.rgba(propertyPanel.themeTextColor.r,
@@ -246,7 +275,7 @@ DTK.Control {
                     y: effectSlider.topPadding + effectSlider.availableHeight / 2 - height / 2
                 }
                 onMoved: {
-                    propertyPanel.effectStrength = Math.round(value);
+                    propertyPanel.effectStrength = propertyPanel.effectSteps[Math.round(value)];
                     propertyPanel.effectStrengthSelected(propertyPanel.effectStrength);
                 }
             }
@@ -306,6 +335,7 @@ DTK.Control {
             }
             Separator { }
             ColorPalette { }
+            MoreColorsButton { }
         }
     }
 

@@ -16,13 +16,38 @@
     </message>
     <message>
         <location filename="../qml/EditPropertyPanel.qml" line="63"/>
-        <source>More Colors...</source>
-        <translation>更多颜色...</translation>
+        <source>More Colors…</source>
+        <translation>更多颜色…</translation>
     </message>
     <message>
         <location filename="../qml/EditPropertyPanel.qml" line="68"/>
         <source>Thickness</source>
         <translation>粗细</translation>
+    </message>
+    <message>
+        <location filename="../qml/EditPropertyPanel.qml" line="180"/>
+        <source>Plain Text</source>
+        <translation>普通文字</translation>
+    </message>
+    <message>
+        <location filename="../qml/EditPropertyPanel.qml" line="189"/>
+        <source>Numbered Step</source>
+        <translation>序号标注</translation>
+    </message>
+    <message>
+        <location filename="../qml/EditPropertyPanel.qml" line="208"/>
+        <source>Gaussian Blur</source>
+        <translation>高斯模糊</translation>
+    </message>
+    <message>
+        <location filename="../qml/EditPropertyPanel.qml" line="209"/>
+        <source>Mosaic</source>
+        <translation>马赛克</translation>
+    </message>
+    <message>
+        <location filename="../qml/EditPropertyPanel.qml" line="210"/>
+        <source>Graffiti</source>
+        <translation>涂鸦</translation>
     </message>
 </context>
 <context>
@@ -88,6 +113,11 @@
         <location filename="../qml/EditToolbar.qml" line="141"/>
         <source>Effects</source>
         <translation>特效</translation>
+    </message>
+    <message>
+        <location filename="../qml/EditToolbar.qml" line="118"/>
+        <source>Blur</source>
+        <translation>模糊</translation>
     </message>
     <message>
         <location filename="../qml/EditToolbar.qml" line="155"/>
@@ -296,8 +326,8 @@
     </message>
     <message>
         <location filename="../qml/FullImageView.qml" line="537"/>
-        <source>This operation will overwrite the original image and cannot be undone. Continue?</source>
-        <translation>此操作将覆盖原图且无法撤销，是否继续？</translation>
+        <source>This will overwrite the original image. This action cannot be undone. Continue?</source>
+        <translation>此操作将覆盖原图，不可恢复，是否继续？</translation>
     </message>
     <message>
         <location filename="../qml/FullImageView.qml" line="552"/>
@@ -470,7 +500,7 @@
     <message>
         <location filename="../qml/MainStack.qml" line="227"/>
         <source>The current image has unsaved changes. Save?</source>
-        <translation>当前图片有未保存的更改，是否保存？</translation>
+        <translation>当前图片有未保存的修改，是否保存？</translation>
     </message>
     <message>
         <location filename="../qml/MainStack.qml" line="235"/>
@@ -666,8 +696,8 @@
     <message>
         <location filename="../qml/ThumbnailListView.qml" line="529"/>
         <location filename="../qml/ThumbnailListView.qml" line="534"/>
-        <source>Edit</source>
-        <translation>编辑</translation>
+        <source>Edit Mode</source>
+        <translation>编辑模式</translation>
     </message>
     <message>
         <location filename="../qml/ThumbnailListView.qml" line="534"/>
