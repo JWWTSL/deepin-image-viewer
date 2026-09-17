@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2024 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2024-2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -20,6 +20,8 @@ PathViewRangeHandler::PathViewRangeHandler(QObject *parent)
 {
     qCDebug(logImageViewer) << "PathViewRangeHandler constructor called.";
 }
+
+PathViewRangeHandler::~PathViewRangeHandler() = default;
 
 QQuickItem *PathViewRangeHandler::target() const
 {
@@ -83,18 +85,19 @@ void PathViewRangeHandler::setEnableBackward(bool b)
 bool PathViewRangeHandler::eventFilter(QObject *obj, QEvent *event)
 {
     qCDebug(logImageViewer) << "PathViewRangeHandler::eventFilter() called for object: " << obj << ", event type: " << event->type();
+    // 鼠标释放时重置基准点；需在双向放行提前 return 之前处理，避免残留状态影响后续拖拽过滤
+    if (QEvent::MouseButtonRelease == event->type()) {
+        qCDebug(logImageViewer) << "Event type: MouseButtonRelease.";
+        basePoint = QPointF();
+        qCDebug(logImageViewer) << "basePoint reset.";
+    }
+
     if (enableForwardFlag && enableBackwardFlag && obj == targetView) {
         qCDebug(logImageViewer) << "Forward and backward enabled, and object is target view, returning false.";
         return false;
     }
 
     switch (event->type()) {
-        case QEvent::MouseButtonRelease: {
-            qCDebug(logImageViewer) << "Event type: MouseButtonRelease.";
-            basePoint = QPointF();
-            qCDebug(logImageViewer) << "basePoint reset.";
-            break;
-        }
         case QEvent::MouseMove: {
             qCDebug(logImageViewer) << "Event type: MouseMove.";
             auto mouseEvent = dynamic_cast<QMouseEvent *>(event);
