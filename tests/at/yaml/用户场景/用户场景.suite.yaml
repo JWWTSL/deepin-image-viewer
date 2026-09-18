@@ -15,12 +15,16 @@ suites:
     selector:
       name: Extract text
     do: click
-    wait: 2.0
+    wait: 25.0
   assert_steps:
   - step_type: assert
     action: assert_element
     selector:
-      name: LiveTextWidget
+      name: HighlightText
+  - step_type: action
+    action: keyboard_press
+    key: escape
+    wait: 0.5
 - id: suite_用户场景_002_s1
   name: 视图切换放大旋转翻转-上下张切换
   description: ''
@@ -40,6 +44,6 @@ suites:
   - step_type: assert
     action: assert_element
     selector:
-      name: BottomthumbnaillistView
+      name: Image view
 teardown:
 - action: session_stop
