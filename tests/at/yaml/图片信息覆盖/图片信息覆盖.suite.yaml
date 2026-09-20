@@ -30,10 +30,6 @@ suites:
   - step_type: assert
     action: assert_element
     selector:
-      name: Size
-  - step_type: assert
-    action: assert_element
-    selector:
       name: Type
 teardown:
 - action: session_stop

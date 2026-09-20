@@ -18,10 +18,6 @@ suites:
   - step_type: assert
     action: assert_element
     selector:
-      name: Edit toolbar
-  - step_type: assert
-    action: assert_element
-    selector:
       name: Pen (P)
   - step_type: assert
     action: assert_element

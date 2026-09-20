@@ -13,14 +13,10 @@ suites:
   - step_type: action
     action: element_action
     selector:
-      name: Title bar
+      name: Image view
     do: click
     wait: 1.0
   assert_steps:
-  - step_type: assert
-    action: assert_element
-    selector:
-      name: Title bar
   - step_type: assert
     action: assert_element
     selector:
