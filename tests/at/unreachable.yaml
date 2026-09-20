@@ -49,3 +49,5 @@ unreachable:
   reason: 'Conditional dialog only appears on rename conflict; not assertable in a standard coverage suite without triggering rename collision'
 - name: UnsavedEditDialog
   reason: 'Conditional dialog only appears when exiting edit mode with unsaved changes; not assertable in a standard coverage suite without specific edit state'
+- name: SaveErrorDialog
+  reason: 'Conditional dialog only appears on save failure (onSaveFailed signal); not assertable in a standard coverage suite without mocking a save error'
