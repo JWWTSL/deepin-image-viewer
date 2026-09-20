@@ -1,14 +1,14 @@
-name: 复制_suite
+name: 图片格式_suite
 app: deepin-image-viewer
-module: 复制
+module: 图片格式
 setup:
 - action: session_start
   command: tests/at/launch.sh
   wait: 7.0
 suites:
-- id: case_1652149_s1
-  name: 复制-右键菜单复制图片
-  description: 通过右键菜单复制当前图片
+- id: case_1652747_s1
+  name: 图片格式-右键菜单检查
+  description: 在图片查看区域右键唤起菜单，验证右键菜单各项正常展示
   steps:
   - step_type: action
     action: dtk_context_menu
@@ -16,6 +16,9 @@ suites:
       name: Image view
     items:
     - Copy
+    - Rename
+    - Delete
+    - Set as wallpaper
     wait: 1.0
   assert_steps:
   - step_type: assert
@@ -25,16 +28,21 @@ suites:
   - step_type: assert
     action: assert_process_running
     app: deepin-image-viewer
-- id: case_1652147_s1
-  name: 复制-右键菜单复制大分辨率图片
-  description: 通过右键菜单复制大分辨率图片，验证无异常
+- id: case_1652737_s1
+  name: 图片格式-图片支持检查
+  description: 打开图片后切换下一张再切回，验证不同格式图片均正常渲染展示
   steps:
   - step_type: action
-    action: dtk_context_menu
+    action: element_action
     selector:
-      name: Image view
-    items:
-    - Copy
+      name: 下一张
+    do: click
+    wait: 1.0
+  - step_type: action
+    action: element_action
+    selector:
+      name: Previous
+    do: click
     wait: 1.0
   assert_steps:
   - step_type: assert
