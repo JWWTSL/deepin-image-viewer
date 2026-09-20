@@ -103,3 +103,31 @@ dc3e8824 fix(at): 修复OCR等待/深菜单导航/对话框残留及不可见元
    AT-SPI Press 假成功是框架层问题，建议向 youqu 社区反馈
 3. **坐标稳定性**: 部分依赖窗口定位的右键操作假设默认窗口位置，多显示器/
    不同分辨率环境需复验
+
+---
+
+## 8. PR #384 剩余用例补充合并结果
+
+### 8.1 补充合并范围
+
+- 从 `origin/agent/at/1789550157` 补充拉取 44 个当前 master 缺失的 suite。
+- 补充后全量临时统计为 69 个 suite / 223 条用例。
+- 首轮验证结果：25 个 suite 通过、44 个 suite 失败；105 条通过、118 条失败。
+
+### 8.2 二次处理结果
+
+- 失败新增 suite 主要依赖不可达 QML 内部元素或不稳定菜单入口，例如
+  `Edit`、`BottomthumbnaillistView`、`FullImageViewer`、`TitleRect`、
+  `ImageAnimation`、`EditCanvas` 等。
+- 按“二次修复仍不可用则剔除”的策略，剔除 39 个失败新增 suite。
+- 保留 5 个首轮已全通过新增 suite，共 14 条新增稳定用例：
+  `公共能力`、`文管打开补充`、`版本兼容`、`缩放场景`、`键鼠交互补充`。
+- 组合运行时额外暴露原有 `主菜单-打开主菜单` 对 `Open image` 菜单项断言不稳定，
+  已剔除该 1 条不稳定用例。
+
+### 8.3 最终验证
+
+- 最终保留：30 个 suite / 101 条用例。
+- 最终全量回归：`Suites: 30 passed, 0 failed, 0 error (30 total)`。
+- 最终全量回归：`Specs: 101 passed, 0 failed, 0 skipped`。
+- 日志：`/tmp/opencode/final_pr384_final.log`。

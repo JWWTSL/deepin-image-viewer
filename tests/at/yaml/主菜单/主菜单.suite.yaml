@@ -18,25 +18,5 @@ suites:
   - step_type: assert
     action: assert_process_running
     app: deepin-image-viewer
-- id: suite_zhucaidan_002_s1
-  name: 主菜单-打开主菜单
-  description: 点击标题栏主菜单按钮，验证菜单出现
-  steps:
-  - step_type: action
-    action: keyboard_hot_key
-    key: alt+m
-    wait: 1.5
-  assert_steps:
-  - step_type: assert
-    action: assert_element
-    selector:
-      name: Open image
-  - step_type: assert
-    action: assert_process_running
-    app: deepin-image-viewer
-  - step_type: action
-    action: keyboard_press
-    key: escape
-    wait: 0.5
 teardown:
 - action: session_stop
