@@ -180,5 +180,31 @@ suites:
   - step_type: assert
     action: assert_process_running
     app: deepin-image-viewer
+- id: case_1652093_s1
+  name: 键鼠切换-撕裂图页面检查图片切换功能
+  description: 移动光标至图片预览区域图片上，按住Ctrl滚动鼠标滚轮切换图片
+  steps:
+  - step_type: action
+    action: element_action
+    selector:
+      name: Image view
+    do: click
+    wait: 0.5
+  - step_type: action
+    action: mouse_scroll
+    value: -1
+    wait: 0.5
+  - step_type: action
+    action: mouse_scroll
+    value: 1
+    wait: 0.5
+  assert_steps:
+  - step_type: assert
+    action: assert_element
+    selector:
+      name: Image view
+  - step_type: assert
+    action: assert_process_running
+    app: deepin-image-viewer
 teardown:
 - action: session_stop

@@ -42,5 +42,24 @@ suites:
   - step_type: assert
     action: assert_process_running
     app: deepin-image-viewer
+- id: case_1652213_s1
+  name: 删除-右键菜单删除图片
+  description: 在图片查看区域右键唤起菜单选择删除，验证删除对话框弹出
+  steps:
+  - step_type: action
+    action: dtk_context_menu
+    selector:
+      name: Image view
+    items:
+    - Delete
+    wait: 1.0
+  assert_steps:
+  - step_type: assert
+    action: assert_element
+    selector:
+      name: Loader_RemoveDialog
+  - step_type: assert
+    action: assert_process_running
+    app: deepin-image-viewer
 teardown:
 - action: session_stop

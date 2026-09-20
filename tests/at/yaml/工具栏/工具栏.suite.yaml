@@ -120,5 +120,74 @@ suites:
   - step_type: assert
     action: assert_process_running
     app: deepin-image-viewer
+- id: case_1652123_s1
+  name: 工具栏-多张图片时检查工具栏
+  description: 使用看图打开多张图片，检查工具栏各项按钮正常展示
+  steps:
+  - step_type: action
+    action: element_action
+    selector:
+      name: Toolbar
+    do: click
+    wait: 0.5
+  assert_steps:
+  - step_type: assert
+    action: assert_element
+    selector:
+      name: Toolbar
+  - step_type: assert
+    action: assert_element
+    selector:
+      name: Next
+  - step_type: assert
+    action: assert_element
+    selector:
+      name: Previous
+  - step_type: assert
+    action: assert_process_running
+    app: deepin-image-viewer
+- id: case_1651981_s1
+  name: 工具栏-单张可读写图片按钮展示
+  description: 使用看图打开单张可读写图片，检查工具栏正常展示
+  steps:
+  - step_type: action
+    action: element_action
+    selector:
+      name: Toolbar
+    do: click
+    wait: 0.5
+  assert_steps:
+  - step_type: assert
+    action: assert_element
+    selector:
+      name: Toolbar
+  - step_type: assert
+    action: assert_element
+    selector:
+      name: Image view
+  - step_type: assert
+    action: assert_process_running
+    app: deepin-image-viewer
+- id: case_1651997_s1
+  name: 工具栏-全屏唤出工具栏
+  description: 进入全屏后将鼠标移至图片下方，验证工具栏唤出
+  steps:
+  - step_type: action
+    action: keyboard_press
+    key: f11
+    wait: 1.5
+  - step_type: action
+    action: mouse_move
+    selector:
+      name: FullImageViewer
+    wait: 1.0
+  assert_steps:
+  - step_type: assert
+    action: assert_element
+    selector:
+      name: Toolbar
+  - step_type: assert
+    action: assert_process_running
+    app: deepin-image-viewer
 teardown:
 - action: session_stop

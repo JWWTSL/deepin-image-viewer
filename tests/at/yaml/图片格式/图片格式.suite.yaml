@@ -52,5 +52,35 @@ suites:
   - step_type: assert
     action: assert_process_running
     app: deepin-image-viewer
+- id: case_1652745_s1
+  name: 图片格式-支持旋转格式图片检查
+  description: 打开BMP格式图片后点击旋转按钮，验证旋转操作正常执行
+  steps:
+  - step_type: action
+    action: element_action
+    selector:
+      name: Rotate clockwise
+    do: click
+    wait: 1.0
+  assert_steps:
+  - step_type: assert
+    action: assert_element
+    selector:
+      name: Image view
+  - step_type: assert
+    action: assert_process_running
+    app: deepin-image-viewer
+- id: case_1652741_s1
+  name: 图片格式-支持设置壁纸格式图片检查
+  description: 使用快捷键Ctrl+F9设置壁纸，验证壁纸设置操作可触发
+  steps:
+  - step_type: action
+    action: keyboard_hot_key
+    key: ctrl+f9
+    wait: 1.0
+  assert_steps:
+  - step_type: assert
+    action: assert_process_running
+    app: deepin-image-viewer
 teardown:
 - action: session_stop

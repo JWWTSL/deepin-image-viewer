@@ -67,5 +67,24 @@ suites:
   - step_type: assert
     action: assert_process_running
     app: deepin-image-viewer
+- id: case_1652239_s1
+  name: 全屏-全屏下右键菜单在文管中显示
+  description: 进入全屏后右键唤起菜单选择在文件管理器中显示，验证菜单项可触发
+  steps:
+  - step_type: action
+    action: keyboard_press
+    key: f11
+    wait: 1.5
+  - step_type: action
+    action: dtk_context_menu
+    selector:
+      name: Image view
+    items:
+    - Display in file manager
+    wait: 1.5
+  assert_steps:
+  - step_type: assert
+    action: assert_process_running
+    app: deepin-image-viewer
 teardown:
 - action: session_stop
