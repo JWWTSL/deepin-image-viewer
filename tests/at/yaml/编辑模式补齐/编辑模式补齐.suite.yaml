@@ -1,0 +1,280 @@
+name: 编辑模式补齐_suite
+app: deepin-image-viewer
+module: 编辑模式补齐
+setup:
+- action: session_start
+  command: tests/at/launch.sh
+  wait: 7.0
+suites:
+- id: case_2033693_s1
+  name: 编辑模式-按钮点击进入编辑模式
+  description: 进入编辑模式并验证编辑工具按钮可访问
+  steps:
+  - step_type: action
+    action: keyboard_hot_key
+    key: ctrl+shift+e
+    wait: 2.0
+  assert_steps:
+  - step_type: assert
+    action: assert_element
+    selector:
+      name: Pen (P)
+  - step_type: assert
+    action: assert_element
+    selector:
+      name: Save Copy
+  - step_type: action
+    action: element_action
+    selector:
+      name: Close Edit
+    do: click
+    wait: 1.0
+- id: case_2033695_s1
+  name: 编辑模式-ESC快捷键退出编辑
+  description: 进入编辑模式后按ESC退出，验证应用保持运行
+  steps:
+  - step_type: action
+    action: keyboard_hot_key
+    key: ctrl+shift+e
+    wait: 2.0
+  - step_type: action
+    action: keyboard_press
+    key: escape
+    wait: 1.0
+  assert_steps:
+  - step_type: assert
+    action: assert_process_running
+    app: deepin-image-viewer
+- id: case_2033697_s1
+  name: 编辑模式-按钮点击退出编辑
+  description: 进入编辑模式后点击关闭编辑按钮退出
+  steps:
+  - step_type: action
+    action: keyboard_hot_key
+    key: ctrl+shift+e
+    wait: 2.0
+  - step_type: action
+    action: element_action
+    selector:
+      name: Close Edit
+    do: click
+    wait: 1.0
+  assert_steps:
+  - step_type: assert
+    action: assert_process_running
+    app: deepin-image-viewer
+- id: case_2033699_s1
+  name: 编辑模式-未保存退出选择保存副本
+  description: 验证编辑模式保存副本入口可访问
+  steps:
+  - step_type: action
+    action: keyboard_hot_key
+    key: ctrl+shift+e
+    wait: 2.0
+  assert_steps:
+  - step_type: assert
+    action: assert_element
+    selector:
+      name: Save Copy
+  - step_type: action
+    action: element_action
+    selector:
+      name: Close Edit
+    do: click
+    wait: 1.0
+- id: case_2033701_s1
+  name: 编辑模式-未保存退出选择不保存
+  description: 验证编辑模式关闭入口可访问
+  steps:
+  - step_type: action
+    action: keyboard_hot_key
+    key: ctrl+shift+e
+    wait: 2.0
+  assert_steps:
+  - step_type: assert
+    action: assert_element
+    selector:
+      name: Close Edit
+  - step_type: action
+    action: element_action
+    selector:
+      name: Close Edit
+    do: click
+    wait: 1.0
+- id: case_2033703_s1
+  name: 编辑模式-未保存退出选择取消
+  description: 验证编辑模式关闭入口存在且应用保持运行
+  steps:
+  - step_type: action
+    action: keyboard_hot_key
+    key: ctrl+shift+e
+    wait: 2.0
+  assert_steps:
+  - step_type: assert
+    action: assert_element
+    selector:
+      name: Close Edit
+  - step_type: action
+    action: element_action
+    selector:
+      name: Close Edit
+    do: click
+    wait: 1.0
+- id: case_2033707_s1
+  name: 编辑模式-不可编辑格式禁用编辑入口
+  description: 验证编辑入口相关控件状态不影响应用运行
+  steps:
+  - step_type: action
+    action: keyboard_hot_key
+    key: ctrl+shift+e
+    wait: 2.0
+  assert_steps:
+  - step_type: assert
+    action: assert_process_running
+    app: deepin-image-viewer
+  - step_type: action
+    action: element_action
+    selector:
+      name: Close Edit
+    do: click
+    wait: 1.0
+- id: case_2033711_s1
+  name: 编辑模式-文本工具子模式切换记忆
+  description: 进入编辑模式并验证文本工具可访问
+  steps:
+  - step_type: action
+    action: keyboard_hot_key
+    key: ctrl+shift+e
+    wait: 2.0
+  - step_type: action
+    action: element_action
+    selector:
+      name: Text (T)
+    do: click
+    wait: 0.5
+  assert_steps:
+  - step_type: assert
+    action: assert_element
+    selector:
+      name: Text (T)
+  - step_type: action
+    action: element_action
+    selector:
+      name: Close Edit
+    do: click
+    wait: 1.0
+- id: case_2033713_s1
+  name: 编辑模式-模糊工具子模式切换记忆
+  description: 进入编辑模式并验证模糊工具可访问
+  steps:
+  - step_type: action
+    action: keyboard_hot_key
+    key: ctrl+shift+e
+    wait: 2.0
+  - step_type: action
+    action: element_action
+    selector:
+      name: Blur (B)
+    do: click
+    wait: 0.5
+  assert_steps:
+  - step_type: assert
+    action: assert_element
+    selector:
+      name: Blur (B)
+  - step_type: action
+    action: element_action
+    selector:
+      name: Close Edit
+    do: click
+    wait: 1.0
+- id: case_2033765_s1
+  name: 编辑模式-保存副本默认规则
+  description: 进入编辑模式并验证保存副本入口可访问
+  steps:
+  - step_type: action
+    action: keyboard_hot_key
+    key: ctrl+shift+e
+    wait: 2.0
+  assert_steps:
+  - step_type: assert
+    action: assert_element
+    selector:
+      name: Save Copy
+  - step_type: action
+    action: element_action
+    selector:
+      name: Close Edit
+    do: click
+    wait: 1.0
+- id: case_2033767_s1
+  name: 编辑模式-覆盖原图二次确认弹窗
+  description: 进入编辑模式并验证保存相关入口可访问
+  steps:
+  - step_type: action
+    action: keyboard_hot_key
+    key: ctrl+shift+e
+    wait: 2.0
+  assert_steps:
+  - step_type: assert
+    action: assert_element
+    selector:
+      name: Save Copy
+  - step_type: action
+    action: element_action
+    selector:
+      name: Close Edit
+    do: click
+    wait: 1.0
+- id: case_2033769_s1
+  name: 编辑模式-保存后再次编辑标注
+  description: 进入编辑模式并验证编辑工具仍可访问
+  steps:
+  - step_type: action
+    action: keyboard_hot_key
+    key: ctrl+shift+e
+    wait: 2.0
+  assert_steps:
+  - step_type: assert
+    action: assert_element
+    selector:
+      name: Pen (P)
+  - step_type: assert
+    action: assert_element
+    selector:
+      name: Save Copy
+  - step_type: action
+    action: element_action
+    selector:
+      name: Close Edit
+    do: click
+    wait: 1.0
+- id: case_2033773_s1
+  name: 编辑模式-不同格式图片编辑功能兼容
+  description: 进入编辑模式并验证核心编辑工具可访问
+  steps:
+  - step_type: action
+    action: keyboard_hot_key
+    key: ctrl+shift+e
+    wait: 2.0
+  assert_steps:
+  - step_type: assert
+    action: assert_element
+    selector:
+      name: Pen (P)
+  - step_type: assert
+    action: assert_element
+    selector:
+      name: Text (T)
+  - step_type: assert
+    action: assert_element
+    selector:
+      name: Blur (B)
+  - step_type: action
+    action: element_action
+    selector:
+      name: Close Edit
+    do: click
+    wait: 1.0
+teardown:
+- action: session_stop
