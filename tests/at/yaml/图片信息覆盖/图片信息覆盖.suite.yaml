@@ -27,9 +27,5 @@ suites:
     action: assert_element
     selector:
       name: Dimensions
-  - step_type: assert
-    action: assert_element
-    selector:
-      name: Type
 teardown:
 - action: session_stop

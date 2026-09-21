@@ -30,7 +30,7 @@ Suites: 31 passed, 0 failed, 0 error (31 total)
 Specs:  121 passed, 0 failed, 0 skipped
 ```
 
-最新回归日志：`/tmp/opencode/final_fix4.log`。
+最新回归日志：`/tmp/opencode/final_fix_type.log`。
 
 ## 过滤统计
 
